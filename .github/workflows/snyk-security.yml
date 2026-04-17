@@ -1,0 +1,27 @@
+name: Snyk Security Scan
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Snyk SCA (Dependency Scan)
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --package-lock-only
+
+      - name: Snyk SCR (Static Code Review)
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: code test
