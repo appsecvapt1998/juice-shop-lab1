@@ -11,8 +11,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install --package-lock-only
+      - name: Prepare Dependency List
+        # --ignore-scripts avoids the 'ng: not found' error
+        run: npm install --package-lock-only --ignore-scripts
 
       - name: Snyk SCA (Push to Dashboard)
         uses: snyk/actions/node@master
