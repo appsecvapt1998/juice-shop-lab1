@@ -14,13 +14,13 @@ jobs:
       - name: Install Dependencies
         run: npm install --package-lock-only
 
-      - name: Snyk SCA (Dependency Scan)
+      - name: Snyk SCA (Push to Dashboard)
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test
-          args: --package-lock-only --prune-repeated-subdependencies
+          command: monitor
+          args: --package-lock-only --project-name="Juice-Shop-CI-SCA"
 
       - name: Snyk SCR (Static Code Review)
         uses: snyk/actions/node@master
