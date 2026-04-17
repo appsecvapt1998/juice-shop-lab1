@@ -11,13 +11,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Install Dependencies
+        run: npm install --package-lock-only
+
       - name: Snyk SCA (Dependency Scan)
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --package-lock-only
+          args: --package-lock-only --prune-repeated-subdependencies
 
       - name: Snyk SCR (Static Code Review)
         uses: snyk/actions/node@master
